@@ -9,13 +9,16 @@ on:
 permissions:
   contents: write
 
+env:
+  PYTHONIOENCODING: utf-8
+
 jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -44,7 +47,7 @@ jobs:
         run: python tools/build.py
 
       - name: Sürüm notları
-        run: python tools/release_notes.py ${{ github.ref_name }} > dist/RELEASE_NOTES.md
+        run: python tools/release_notes.py ${{ github.ref_name }} dist/RELEASE_NOTES.md
 
       - name: GitHub Release oluştur
         shell: pwsh

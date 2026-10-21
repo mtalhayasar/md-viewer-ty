@@ -108,6 +108,7 @@ def checksums(files: list[Path]) -> Path:
 
 
 def main() -> None:
+    sys.stdout.reconfigure(encoding="utf-8")
     ver = version()
     print(f"MD Viewer TY {ver} derleniyor", flush=True)
     if DIST.exists():
