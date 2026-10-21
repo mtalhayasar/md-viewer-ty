@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="tr" data-theme="paper" data-font="sitka" class="preload">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MD Viewer TY</title>
+  <link rel="icon" href="icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="is-empty">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-toc" viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13"/></symbol>
+    <symbol id="i-open" viewBox="0 0 24 24"><path d="M3 7.5V18a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9.5a2 2 0 0 0-2-2h-7L10 5H5a2 2 0 0 0-2 2.5Z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></symbol>
+    <symbol id="i-focus" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/></symbol>
+    <symbol id="i-full" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7M6 9.5V20h12V9.5"/></symbol>
+  </svg>
+
+  <div id="progress" aria-hidden="true"><div id="progress-bar"></div></div>
+
+  <header id="topbar">
+    <div class="bar-left">
+      <button class="icon" id="btn-toc" title="İçindekiler (S)"><svg><use href="#i-toc"/></svg></button>
+      <button class="icon" id="btn-home" title="Başlangıç ekranı"><svg><use href="#i-home"/></svg></button>
+      <div class="doc-heading">
+        <span id="doc-name">MD Viewer TY</span>
+        <span id="doc-remaining"></span>
+      </div>
+    </div>
+    <div class="bar-right">
+      <button class="icon" id="btn-search" title="Belgede ara (Ctrl+F)"><svg><use href="#i-search"/></svg></button>
+      <button class="icon" id="btn-focus" title="Odak modu (F)"><svg><use href="#i-focus"/></svg></button>
+      <button class="icon text" id="btn-appearance" title="Görünüm">Aa</button>
+      <button class="icon" id="btn-open" title="Dosya aç (Ctrl+O)"><svg><use href="#i-open"/></svg></button>
+      <button class="icon" id="btn-full" title="Tam ekran (F11)"><svg><use href="#i-full"/></svg></button>
+    </div>
+  </header>
+
+  <aside id="sidebar">
+    <div class="side-head">
+      <span>İçindekiler</span>
+      <span id="toc-total"></span>
+    </div>
+    <nav id="toc"></nav>
+  </aside>
+
+  <main id="main">
+    <section id="welcome">
+      <div class="welcome-inner">
+        <div class="brand">
+          <img class="brand-icon" src="icon.png" alt="">
+          <div>
+            <h1>MD Viewer <span class="brand-ty">TY</span></h1>
+            <p class="tagline">Markdown belgelerini acele etmeden, keyifle oku.</p>
+          </div>
+        </div>
+        <div class="welcome-actions">
+          <button class="primary" id="btn-open-welcome"><svg><use href="#i-open"/></svg>Dosya aç</button>
+          <span class="hint">ya da bir <code>.md</code> dosyasını pencereye sürükle</span>
+        </div>
+        <div id="recent-wrap">
+          <h2>Kaldığın yerden devam et</h2>
+          <ul id="recent"></ul>
+        </div>
+        <dl class="shortcuts">
+          <div><dt><kbd>Ctrl</kbd> <kbd>O</kbd></dt><dd>Dosya aç</dd></div>
+          <div><dt><kbd>F</kbd></dt><dd>Odak modu</dd></div>
+          <div><dt><kbd>R</kbd></dt><dd>Okuma cetveli</dd></div>
+          <div><dt><kbd>B</kbd></dt><dd>Hızlı okuma</dd></div>
+          <div><dt><kbd>T</kbd></dt><dd>Tema değiştir</dd></div>
+          <div><dt><kbd>N</kbd> / <kbd>P</kbd></dt><dd>Sonraki / önceki bölüm</dd></div>
+          <div><dt><kbd>Ctrl</kbd> <kbd>+</kbd> / <kbd>−</kbd></dt><dd>Yazı boyutu</dd></div>
+          <div><dt><kbd>S</kbd></dt><dd>İçindekiler</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <article id="doc" class="prose"></article>
+
+    <section id="endcard">
+      <div class="end-ornament">❦</div>
+      <h2>Belgenin sonuna geldin</h2>
+      <p id="end-stats"></p>
+      <div class="end-actions">
+        <button id="btn-top">Başa dön</button>
+        <button class="primary" id="btn-open-end">Başka bir belge aç</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="appearance" class="popover" role="dialog" aria-label="Görünüm ayarları">
+    <div class="pop-section">
+      <div class="pop-label">Tema</div>
+      <div class="themes">
+        <button data-theme-btn="paper"><span class="sw sw-paper">Aa</span>Kâğıt</button>
+        <button data-theme-btn="sepia"><span class="sw sw-sepia">Aa</span>Sepya</button>
+        <button data-theme-btn="night"><span class="sw sw-night">Aa</span>Gece</button>
+        <button data-theme-btn="ink"><span class="sw sw-ink">Aa</span>Mürekkep</button>
+      </div>
+    </div>
+    <div class="pop-section">
+      <div class="pop-label">Yazı tipi</div>
+      <div class="segmented" id="fonts">
+        <button data-font-btn="sitka" style="font-family:'Sitka Text',Georgia,serif">Sitka</button>
+        <button data-font-btn="georgia" style="font-family:Georgia,serif">Georgia</button>
+        <button data-font-btn="segoe" style="font-family:'Segoe UI Variable Text','Segoe UI',sans-serif">Segoe</button>
+        <button data-font-btn="verdana" style="font-family:Verdana,sans-serif" title="Disleksi dostu, geniş harf aralıklı">Verdana</button>
+      </div>
+    </div>
+    <div class="pop-section">
+      <div class="pop-row">
+        <span class="pop-label">Boyut</span>
+        <div class="stepper">
+          <button id="size-down" aria-label="Küçült">A−</button>
+          <output id="size-val">20</output>
+          <button id="size-up" aria-label="Büyüt">A+</button>
+        </div>
+      </div>
+      <label class="pop-row">
+        <span class="pop-label">Satır genişliği</span>
+        <input type="range" id="width" min="48" max="100" step="2">
+      </label>
+      <label class="pop-row">
+        <span class="pop-label">Satır aralığı</span>
+        <input type="range" id="leading" min="1.4" max="2.2" step="0.05">
+      </label>
+    </div>
+    <div class="pop-section toggles">
+      <label class="toggle"><input type="checkbox" id="opt-focus"><span><b>Odak modu</b><small>Okuduğun paragraf dışında her şey soluklaşır</small></span></label>
+      <label class="toggle"><input type="checkbox" id="opt-ruler"><span><b>Okuma cetveli</b><small>İmleci takip eden yumuşak bir satır vurgusu</small></span></label>
+      <label class="toggle"><input type="checkbox" id="opt-bionic"><span><b>Hızlı okuma</b><small>Kelime başlarını kalınlaştırır, göz daha hızlı kayar</small></span></label>
+    </div>
+    <div class="pop-section about">
+      <div class="about-row">
+        <img src="icon.png" alt="">
+        <div><b>MD Viewer TY</b><small id="app-version"></small></div>
+        <button class="ghost" id="btn-check-update">Güncellemeleri denetle</button>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-autoupdate"><span><b>Otomatik denetle</b><small>Açılışta yeni sürüm olup olmadığına bakar</small></span></label>
+    </div>
+  </div>
+
+  <div id="searchbar" role="search">
+    <svg class="sb-icon"><use href="#i-search"/></svg>
+    <input id="search-input" type="text" placeholder="Belgede ara…" autocomplete="off" spellcheck="false">
+    <span id="search-count"></span>
+    <button class="icon sm" id="search-prev" title="Önceki (Shift+Enter)"><svg><use href="#i-up"/></svg></button>
+    <button class="icon sm" id="search-next" title="Sonraki (Enter)"><svg><use href="#i-down"/></svg></button>
+    <button class="icon sm" id="search-close" title="Kapat (Esc)"><svg><use href="#i-close"/></svg></button>
+  </div>
+
+  <div id="ruler" aria-hidden="true"></div>
+  <div id="toast" role="status"></div>
+  <div id="dropzone"><div><img class="brand-icon" src="icon.png" alt=""><p>Bırak, okumaya başlayalım</p></div></div>
+
+  <section id="update" role="dialog" aria-label="Güncelleme">
+    <div class="up-head">
+      <img src="icon.png" alt="">
+      <div>
+        <b>Yeni sürüm hazır</b>
+        <small id="up-versions"></small>
+      </div>
+      <button class="icon sm" id="up-close" title="Sonra"><svg><use href="#i-close"/></svg></button>
+    </div>
+    <div id="up-notes"></div>
+    <div class="up-progress"><i id="up-bar"></i></div>
+    <div class="up-actions">
+      <button class="ghost" id="up-page">Sürüm notları</button>
+      <button class="primary" id="up-install">Şimdi güncelle</button>
+    </div>
+  </section>
+  <div id="lightbox"><img alt=""></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
